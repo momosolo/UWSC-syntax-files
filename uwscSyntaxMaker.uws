@@ -32,7 +32,9 @@ TEXTBLOCK header
 //  Ver 5.0 uwsc.chmより抜粋
 ENDTEXTBLOCK
 
-	const hilightPath = "hidemaru\uwsc.hilight"
+	const directory = "hidemaru"
+	const fileName = "uwsc.hilight"
+	const hilightPath = directory + "\" + fileName
 	const openMode = F_WRITE1 or F_NOCR
 	dim fid
 	
@@ -89,7 +91,9 @@ TEXTBLOCK header
 
 ENDTEXTBLOCK
 
-	const hilightPath = "mery\uwsc.msy"
+	const directory = "mery"
+	const fileName = "uwsc.msy"
+	const hilightPath = directory + "\" + fileName
 	const openMode = F_WRITE8B or F_NOCR
 	dim fid
 	
@@ -158,8 +162,11 @@ TEXTBLOCK header2
 
 ENDTEXTBLOCK
 
-	const hilightPath1 = "sakura\uwsc51.kwd"
-	const hilightPath2 = "sakura\uwsc52.kwd"
+	const directory = "sakura"
+	const fileName1 = "uwsc51.kwd"
+	const fileName2 = "uwsc52.kwd"
+	const hilightPath1 = directory + "\" + fileName1
+	const hilightPath2 = directory + "\" + fileName2
 	const openMode = F_WRITE1 or F_NOCR
 	dim fid1,fid2
 	
@@ -221,6 +228,19 @@ class all
 			except
 				//unknown className or procedureName
 				msgbox("COM_Error:className=" + className + ", procedureName=" + procedureName)
+			endtry
+			COM_ERR_RET
+		next
+	fend
+	procedure all
+		for className in classList
+			COM_ERR_IGN
+			try
+				//doscmd(mkdir className.directory)
+				doscmdStr = "mkdir " + eval(className + ".directory")
+				doscmd(doscmdStr)
+			except
+				//not define directory
 			endtry
 			COM_ERR_RET
 		next
