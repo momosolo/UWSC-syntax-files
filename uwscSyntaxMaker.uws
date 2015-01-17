@@ -1,0 +1,230 @@
+// 以下のようなCSVファイルを読み込み、各エディタごとのUWSC用強調表示定義ファイルを出力する
+// PUBLIC,スクリプト構文,変数
+// MOD,スクリプト構文,変数
+// AND,スクリプト構文,演算式
+// GETID,スクリプト関数,ウィンドウ関連
+// RANDOM,スクリプト関数,数学関数
+// VK_START,定数,定義済み仮想キー
+// VK_OEM_PA1,定数,定義済み仮想キー
+
+csvFid = fopen("uwscSyntax.csv")
+headerExists= true
+
+if headerExists = true then csvStartRow = 2 else csvStartRow = 1
+public hashtbl syntaxData = hash_sort
+for row = csvStartRow to fget(csvFid, F_LINECOUNT)
+	syntax = fget(csvFid, row, 1) // アルファベット順のキーに使用
+	syntaxData[syntax] = fget(csvFid, row) // 各行ハッシュテーブルに格納
+next
+fclose(csvFid)
+
+all.fileOpen
+all.filePut
+all.fileClose
+
+///////////////////////////////////////////////////////////////////////////////
+// 秀丸エディタ
+// http://hide.maruo.co.jp/software/hidemaru.html
+
+TEXTBLOCK hidemaruHeader
+// UWSC用強調表示定義ファイル
+//  Ver 5.0 uwsc.chmより抜粋
+ENDTEXTBLOCK
+
+class hidemaru
+	const hilightPath = "hidemaru\uwsc.hilight"
+	const openMode = F_WRITE1 or F_NOCR
+	dim fid
+	
+	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
+	procedure fileClose; fclose(fid); fend;
+	procedure filePut
+		fput(fid, hidemaruHeader)
+		
+		hilight=""
+		
+		for index = 0 to length(syntaxData)-1
+			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
+			syntax = csvArray[0]
+			category1 = csvArray[1]
+			category2 = csvArray[2]
+			
+			select category1
+				case "スクリプト構文"
+					hilight = hilight + "41," + syntax + "<#CR>"
+				case "スクリプト関数"
+					hilight = hilight + "105," + syntax + "<#CR>"
+				case "特殊変数", "配列変数"
+					hilight = hilight + "169," + syntax + "<#CR>"
+				default //"定数"
+					hilight = hilight + "233," + syntax + "<#CR>"
+			selend
+		next
+		
+		fput(fid, hilight)
+	fend
+endclass
+
+///////////////////////////////////////////////////////////////////////////////
+// Mery
+// http://www.haijin-boys.com/wiki/
+
+TEXTBLOCK meryHeader
+#TagBegin=
+#TagEnd=
+#CommentBegin1=
+#CommentEnd1=
+#LineComment1=//
+#CommentBegin2=
+#CommentEnd2=
+#LineComment2=
+#SpecialSyntax=None
+#ScriptBegin=
+#ScriptEnd=
+#QuoteSingle=False
+#QuoteDouble=True
+#QuoteContinue=False
+#EscapeCharacter=
+
+ENDTEXTBLOCK
+
+class mery
+	const hilightPath = "mery\uwsc.msy"
+	const openMode = F_WRITE8B or F_NOCR
+	dim fid
+	
+	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
+	procedure fileClose; fclose(fid); fend;
+	procedure filePut
+		fput(fid, meryHeader)
+		
+		hilight1="#Word Color=0, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False<#CR>"
+		hilight4="#Word Color=3, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False<#CR>"
+		hilight5="#Word Color=4, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False<#CR>"
+		
+		for index = 0 to length(syntaxData)-1
+			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
+			syntax = csvArray[0]
+			category1 = csvArray[1]
+			category2 = csvArray[2]
+			
+			if category2 = "定義済み仮想キー" then
+				hilight4 = hilight4 + syntax + "<#CR>"
+			elseif category1 = "スクリプト構文" or category1 = "定数" then
+				hilight1 = hilight1 + syntax + "<#CR>"
+			else
+				hilight5 = hilight5 + syntax + "<#CR>"
+			endif
+		next
+		
+		fput(fid, hilight1)
+		fput(fid, hilight4)
+		fput(fid, hilight5)
+	fend
+endclass
+
+///////////////////////////////////////////////////////////////////////////////
+// サクラエディタ
+// http://sakura-editor.sourceforge.net/
+
+TEXTBLOCK sakuraHeader1
+// UWSC1  キーワード定義ファイル
+//  Ver 5.0 uwsc.chmより抜粋
+//  スクリプト構文
+//  スクリプト関数・数学関数
+//  スクリプト関数・文字操作関連
+//  スクリプト関数・ウィンドウ関連
+
+ENDTEXTBLOCK
+
+TEXTBLOCK sakuraHeader2
+// UWSC2  キーワード定義ファイル
+//  Ver 5.0 uwsc.chmより抜粋
+//  スクリプト関数・ダイアログ/表示関連
+//  スクリプト関数・制御関数関連
+//  スクリプト関数・システム関数関連
+//  スクリプト関数・ウィンドウ関数低レベル
+//  スクリプト関数・配列操作関連
+//  スクリプト関数・ファイル関連
+//  スクリプト関数・INIファイル
+//  スクリプト関数・COMオブジェクト
+//  スクリプト関数・音声認識/合成
+//  スクリプト関数・IE操作関連
+//  スクリプト関数・フォーム画面
+//  スクリプト関数・Excel操作関連
+//  定数
+//  配列変数
+//  特殊変数
+
+ENDTEXTBLOCK
+
+class sakura
+	const hilightPath1 = "sakura\uwsc51.kwd"
+	const hilightPath2 = "sakura\uwsc52.kwd"
+	const openMode = F_WRITE1 or F_NOCR
+	dim fid1,fid2
+	
+	procedure fileOpen
+		fid1 = fopen(hilightPath1, openMode)
+		fid2 = fopen(hilightPath2, openMode)
+	fend
+	
+	procedure fileClose
+		fclose(fid1)
+		fclose(fid2)
+	fend
+	
+	procedure filePut
+		fput(fid1, sakuraHeader1)
+		fput(fid2, sakuraHeader2)
+		
+		hilight1=""
+		hilight2=""
+		
+		for index = 0 to length(syntaxData)-1
+			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
+			syntax = csvArray[0]
+			category1 = csvArray[1]
+			category2 = csvArray[2]
+			
+			if category1 = "スクリプト構文" then
+				hilight1 = hilight1 + syntax + "<#CR>"
+			else
+				select category2
+					case "数学関数","文字操作関連","ウィンドウ関連"
+						hilight1 = hilight1 + syntax + "<#CR>"
+					default
+						hilight2 = hilight2 + syntax + "<#CR>"
+				selend
+			endif
+		next
+		
+		fput(fid1, hilight1)
+		fput(fid2, hilight2)
+	fend
+endclass
+
+///////////////////////////////////////////////////////////////////////////////
+class all
+	//各クラスを用意、クラス名をこの配列に追加する
+	dim classList[] = "hidemaru", "mery", "sakura"
+	
+	procedure fileOpen;  do("fileOpen");  fend;
+	procedure fileClose; do("fileClose"); fend;
+	procedure filePut;	 do("filePut");   fend;
+	procedure do(procedureName)
+		for className in classList
+			COM_ERR_IGN
+			try
+				//className.procedureName()
+				evalStr = className + "." + procedureName + "()"
+				eval(evalStr)
+			except
+				//unknown className or procedureName
+				msgbox("COM_Error:className=" + className + ", procedureName=" + procedureName)
+			endtry
+			COM_ERR_RET
+		next
+	fend
+endclass
+///////////////////////////////////////////////////////////////////////////////
