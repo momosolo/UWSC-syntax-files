@@ -1,11 +1,11 @@
-// ˆÈ‰º‚Ì‚æ‚¤‚ÈCSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İAŠeƒGƒfƒBƒ^‚²‚Æ‚ÌUWSC—p‹­’²•\¦’è‹`ƒtƒ@ƒCƒ‹‚ğo—Í‚·‚é
-// PUBLIC,ƒXƒNƒŠƒvƒg\•¶,•Ï”
-// MOD,ƒXƒNƒŠƒvƒg\•¶,•Ï”
-// AND,ƒXƒNƒŠƒvƒg\•¶,‰‰Z®
-// GETID,ƒXƒNƒŠƒvƒgŠÖ”,ƒEƒBƒ“ƒhƒEŠÖ˜A
-// RANDOM,ƒXƒNƒŠƒvƒgŠÖ”,”ŠwŠÖ”
-// VK_START,’è”,’è‹`Ï‚İ‰¼‘zƒL[
-// VK_OEM_PA1,’è”,’è‹`Ï‚İ‰¼‘zƒL[
+// ä»¥ä¸‹ã®ã‚ˆã†ãªCSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿ã€å„ã‚¨ãƒ‡ã‚£ã‚¿ã”ã¨ã®UWSCç”¨å¼·èª¿è¡¨ç¤ºå®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‡ºåŠ›ã™ã‚‹
+// PUBLIC,ã‚¹ã‚¯ãƒªãƒ—ãƒˆæ§‹æ–‡,å¤‰æ•°
+// MOD,ã‚¹ã‚¯ãƒªãƒ—ãƒˆæ§‹æ–‡,å¤‰æ•°
+// AND,ã‚¹ã‚¯ãƒªãƒ—ãƒˆæ§‹æ–‡,æ¼”ç®—å¼
+// GETID,ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°,ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–¢é€£
+// RANDOM,ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°,æ•°å­¦é–¢æ•°
+// VK_START,å®šæ•°,å®šç¾©æ¸ˆã¿ä»®æƒ³ã‚­ãƒ¼
+// VK_OEM_PA1,å®šæ•°,å®šç¾©æ¸ˆã¿ä»®æƒ³ã‚­ãƒ¼
 
 csvFid = fopen("uwscSyntax.csv")
 headerExists= true
@@ -13,8 +13,8 @@ headerExists= true
 if headerExists = true then csvStartRow = 2 else csvStartRow = 1
 public hashtbl syntaxData = hash_sort
 for row = csvStartRow to fget(csvFid, F_LINECOUNT)
-	syntax = fget(csvFid, row, 1) // ƒAƒ‹ƒtƒ@ƒxƒbƒg‡‚ÌƒL[‚Ég—p
-	syntaxData[syntax] = fget(csvFid, row) // ŠesƒnƒbƒVƒ…ƒe[ƒuƒ‹‚ÉŠi”[
+	syntax = fget(csvFid, row, 1) // ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆé †ã®ã‚­ãƒ¼ã«ä½¿ç”¨
+	syntaxData[syntax] = fget(csvFid, row) // å„è¡Œãƒãƒƒã‚·ãƒ¥ãƒ†ãƒ¼ãƒ–ãƒ«ã«æ ¼ç´
 next
 fclose(csvFid)
 
@@ -23,13 +23,13 @@ all.filePut
 all.fileClose
 
 ///////////////////////////////////////////////////////////////////////////////
-// GŠÛƒGƒfƒBƒ^
+// ç§€ä¸¸ã‚¨ãƒ‡ã‚£ã‚¿
 // http://hide.maruo.co.jp/software/hidemaru.html
 
 class hidemaru
 TEXTBLOCK header
-// UWSC—p‹­’²•\¦’è‹`ƒtƒ@ƒCƒ‹
-//  Ver 5.0 uwsc.chm‚æ‚è”²ˆ
+// UWSCç”¨å¼·èª¿è¡¨ç¤ºå®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«
+//  Ver 5.0 uwsc.chmã‚ˆã‚ŠæŠœç²‹
 ENDTEXTBLOCK
 
 	const hilightPath = "hidemaru\uwsc.hilight"
@@ -50,13 +50,13 @@ ENDTEXTBLOCK
 			category2 = csvArray[2]
 			
 			select category1
-				case "ƒXƒNƒŠƒvƒg\•¶"
+				case "ã‚¹ã‚¯ãƒªãƒ—ãƒˆæ§‹æ–‡"
 					hilight = hilight + "41," + syntax + "<#CR>"
-				case "ƒXƒNƒŠƒvƒgŠÖ”"
+				case "ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°"
 					hilight = hilight + "105," + syntax + "<#CR>"
-				case "“Áê•Ï”", "”z—ñ•Ï”"
+				case "ç‰¹æ®Šå¤‰æ•°", "é…åˆ—å¤‰æ•°"
 					hilight = hilight + "169," + syntax + "<#CR>"
-				default //"’è”"
+				default //"å®šæ•°"
 					hilight = hilight + "233," + syntax + "<#CR>"
 			selend
 		next
@@ -108,9 +108,9 @@ ENDTEXTBLOCK
 			category1 = csvArray[1]
 			category2 = csvArray[2]
 			
-			if category2 = "’è‹`Ï‚İ‰¼‘zƒL[" then
+			if category2 = "å®šç¾©æ¸ˆã¿ä»®æƒ³ã‚­ãƒ¼" then
 				hilight4 = hilight4 + syntax + "<#CR>"
-			elseif category1 = "ƒXƒNƒŠƒvƒg\•¶" or category1 = "’è”" then
+			elseif category1 = "ã‚¹ã‚¯ãƒªãƒ—ãƒˆæ§‹æ–‡" or category1 = "å®šæ•°" then
 				hilight1 = hilight1 + syntax + "<#CR>"
 			else
 				hilight5 = hilight5 + syntax + "<#CR>"
@@ -124,37 +124,37 @@ ENDTEXTBLOCK
 endclass
 
 ///////////////////////////////////////////////////////////////////////////////
-// ƒTƒNƒ‰ƒGƒfƒBƒ^
+// ã‚µã‚¯ãƒ©ã‚¨ãƒ‡ã‚£ã‚¿
 // http://sakura-editor.sourceforge.net/
 
 class sakura
 TEXTBLOCK header1
-// UWSC1  ƒL[ƒ[ƒh’è‹`ƒtƒ@ƒCƒ‹
-//  Ver 5.0 uwsc.chm‚æ‚è”²ˆ
-//  ƒXƒNƒŠƒvƒg\•¶
-//  ƒXƒNƒŠƒvƒgŠÖ”E”ŠwŠÖ”
-//  ƒXƒNƒŠƒvƒgŠÖ”E•¶š‘€ìŠÖ˜A
-//  ƒXƒNƒŠƒvƒgŠÖ”EƒEƒBƒ“ƒhƒEŠÖ˜A
+// UWSC1  ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«
+//  Ver 5.0 uwsc.chmã‚ˆã‚ŠæŠœç²‹
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆæ§‹æ–‡
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»æ•°å­¦é–¢æ•°
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»æ–‡å­—æ“ä½œé–¢é€£
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–¢é€£
 
 ENDTEXTBLOCK
 TEXTBLOCK header2
-// UWSC2  ƒL[ƒ[ƒh’è‹`ƒtƒ@ƒCƒ‹
-//  Ver 5.0 uwsc.chm‚æ‚è”²ˆ
-//  ƒXƒNƒŠƒvƒgŠÖ”Eƒ_ƒCƒAƒƒO/•\¦ŠÖ˜A
-//  ƒXƒNƒŠƒvƒgŠÖ”E§ŒäŠÖ”ŠÖ˜A
-//  ƒXƒNƒŠƒvƒgŠÖ”EƒVƒXƒeƒ€ŠÖ”ŠÖ˜A
-//  ƒXƒNƒŠƒvƒgŠÖ”EƒEƒBƒ“ƒhƒEŠÖ”’áƒŒƒxƒ‹
-//  ƒXƒNƒŠƒvƒgŠÖ”E”z—ñ‘€ìŠÖ˜A
-//  ƒXƒNƒŠƒvƒgŠÖ”Eƒtƒ@ƒCƒ‹ŠÖ˜A
-//  ƒXƒNƒŠƒvƒgŠÖ”EINIƒtƒ@ƒCƒ‹
-//  ƒXƒNƒŠƒvƒgŠÖ”ECOMƒIƒuƒWƒFƒNƒg
-//  ƒXƒNƒŠƒvƒgŠÖ”E‰¹º”F¯/‡¬
-//  ƒXƒNƒŠƒvƒgŠÖ”EIE‘€ìŠÖ˜A
-//  ƒXƒNƒŠƒvƒgŠÖ”EƒtƒH[ƒ€‰æ–Ê
-//  ƒXƒNƒŠƒvƒgŠÖ”EExcel‘€ìŠÖ˜A
-//  ’è”
-//  ”z—ñ•Ï”
-//  “Áê•Ï”
+// UWSC2  ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«
+//  Ver 5.0 uwsc.chmã‚ˆã‚ŠæŠœç²‹
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»ãƒ€ã‚¤ã‚¢ãƒ­ã‚°/è¡¨ç¤ºé–¢é€£
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»åˆ¶å¾¡é–¢æ•°é–¢é€£
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»ã‚·ã‚¹ãƒ†ãƒ é–¢æ•°é–¢é€£
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–¢æ•°ä½ãƒ¬ãƒ™ãƒ«
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»é…åˆ—æ“ä½œé–¢é€£
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»ãƒ•ã‚¡ã‚¤ãƒ«é–¢é€£
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»INIãƒ•ã‚¡ã‚¤ãƒ«
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»COMã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»éŸ³å£°èªè­˜/åˆæˆ
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»IEæ“ä½œé–¢é€£
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»ãƒ•ã‚©ãƒ¼ãƒ ç”»é¢
+//  ã‚¹ã‚¯ãƒªãƒ—ãƒˆé–¢æ•°ãƒ»Excelæ“ä½œé–¢é€£
+//  å®šæ•°
+//  é…åˆ—å¤‰æ•°
+//  ç‰¹æ®Šå¤‰æ•°
 
 ENDTEXTBLOCK
 
@@ -186,11 +186,11 @@ ENDTEXTBLOCK
 			category1 = csvArray[1]
 			category2 = csvArray[2]
 			
-			if category1 = "ƒXƒNƒŠƒvƒg\•¶" then
+			if category1 = "ã‚¹ã‚¯ãƒªãƒ—ãƒˆæ§‹æ–‡" then
 				hilight1 = hilight1 + syntax + "<#CR>"
 			else
 				select category2
-					case "”ŠwŠÖ”","•¶š‘€ìŠÖ˜A","ƒEƒBƒ“ƒhƒEŠÖ˜A"
+					case "æ•°å­¦é–¢æ•°","æ–‡å­—æ“ä½œé–¢é€£","ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–¢é€£"
 						hilight1 = hilight1 + syntax + "<#CR>"
 					default
 						hilight2 = hilight2 + syntax + "<#CR>"
@@ -205,7 +205,7 @@ endclass
 
 ///////////////////////////////////////////////////////////////////////////////
 class all
-	//ŠeƒNƒ‰ƒX‚ğ—pˆÓAƒNƒ‰ƒX–¼‚ğ‚±‚Ì”z—ñ‚É’Ç‰Á‚·‚é
+	//å„ã‚¯ãƒ©ã‚¹ã‚’ç”¨æ„ã€ã‚¯ãƒ©ã‚¹åã‚’ã“ã®é…åˆ—ã«è¿½åŠ ã™ã‚‹
 	dim classList[] = "hidemaru", "mery", "sakura"
 	
 	procedure fileOpen;  do("fileOpen");  fend;
