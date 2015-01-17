@@ -26,12 +26,12 @@ all.fileClose
 // 秀丸エディタ
 // http://hide.maruo.co.jp/software/hidemaru.html
 
-TEXTBLOCK hidemaruHeader
+class hidemaru
+TEXTBLOCK header
 // UWSC用強調表示定義ファイル
 //  Ver 5.0 uwsc.chmより抜粋
 ENDTEXTBLOCK
 
-class hidemaru
 	const hilightPath = "hidemaru\uwsc.hilight"
 	const openMode = F_WRITE1 or F_NOCR
 	dim fid
@@ -39,7 +39,7 @@ class hidemaru
 	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
 	procedure fileClose; fclose(fid); fend;
 	procedure filePut
-		fput(fid, hidemaruHeader)
+		fput(fid, header)
 		
 		hilight=""
 		
@@ -69,7 +69,8 @@ endclass
 // Mery
 // http://www.haijin-boys.com/wiki/
 
-TEXTBLOCK meryHeader
+class mery
+TEXTBLOCK header
 #TagBegin=
 #TagEnd=
 #CommentBegin1=
@@ -88,7 +89,6 @@ TEXTBLOCK meryHeader
 
 ENDTEXTBLOCK
 
-class mery
 	const hilightPath = "mery\uwsc.msy"
 	const openMode = F_WRITE8B or F_NOCR
 	dim fid
@@ -96,7 +96,7 @@ class mery
 	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
 	procedure fileClose; fclose(fid); fend;
 	procedure filePut
-		fput(fid, meryHeader)
+		fput(fid, header)
 		
 		hilight1="#Word Color=0, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False<#CR>"
 		hilight4="#Word Color=3, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False<#CR>"
@@ -127,7 +127,8 @@ endclass
 // サクラエディタ
 // http://sakura-editor.sourceforge.net/
 
-TEXTBLOCK sakuraHeader1
+class sakura
+TEXTBLOCK header1
 // UWSC1  キーワード定義ファイル
 //  Ver 5.0 uwsc.chmより抜粋
 //  スクリプト構文
@@ -136,8 +137,7 @@ TEXTBLOCK sakuraHeader1
 //  スクリプト関数・ウィンドウ関連
 
 ENDTEXTBLOCK
-
-TEXTBLOCK sakuraHeader2
+TEXTBLOCK header2
 // UWSC2  キーワード定義ファイル
 //  Ver 5.0 uwsc.chmより抜粋
 //  スクリプト関数・ダイアログ/表示関連
@@ -158,7 +158,6 @@ TEXTBLOCK sakuraHeader2
 
 ENDTEXTBLOCK
 
-class sakura
 	const hilightPath1 = "sakura\uwsc51.kwd"
 	const hilightPath2 = "sakura\uwsc52.kwd"
 	const openMode = F_WRITE1 or F_NOCR
@@ -175,8 +174,8 @@ class sakura
 	fend
 	
 	procedure filePut
-		fput(fid1, sakuraHeader1)
-		fput(fid2, sakuraHeader2)
+		fput(fid1, header1)
+		fput(fid2, header2)
 		
 		hilight1=""
 		hilight2=""
