@@ -1,7 +1,8 @@
 option specialchar
 
-csvFid = fopen("uwscSyntax.csv") //ヘルプから生成した構文情報CSVファイル
-public crlf=chr($0d)+chr($0a) //改行
+csvFid = fopen("uwscSyntax.csv") // ヘルプから生成した構文情報CSVファイル
+public crlf=chr($0d)+chr($0a) // 改行
+public wq=chr($22) // ダブルクォート
 public hashtbl syntaxData = hash_sort
 for row = 2 to fget(csvFid, F_LINECOUNT)
 	syntax = fget(csvFid, row, 1) // アルファベット順のキーに使用
@@ -268,30 +269,30 @@ TEXTBLOCK footer
             <Keywords name="Delimiters">00&quot; 01 02&quot; 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23</Keywords>
         </KeywordLists>
         <Styles>
-            <WordsStyle name="DEFAULT" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="COMMENTS" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="LINE COMMENTS" fgColor="008000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="NUMBERS" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS1" fgColor="FF00FF" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS2" fgColor="0000FF" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS3" fgColor="000000" bgColor="FFFFFF" fontStyle="1" nesting="0" />
-            <WordsStyle name="KEYWORDS4" fgColor="0080C0" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS5" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS6" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS7" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS8" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="OPERATORS" fgColor="8000FF" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="FOLDER IN CODE1" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="FOLDER IN CODE2" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="FOLDER IN COMMENT" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS1" fgColor="808080" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS2" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS3" fgColor="808080" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS4" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS5" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS6" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS7" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS8" fgColor="000000" bgColor="FFFFFF" fontStyle="0" nesting="0" />
+            <WordsStyle name="DEFAULT" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="COMMENTS" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="LINE COMMENTS" fgColor="008000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="NUMBERS" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS1" fgColor="FF8000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS2" fgColor="FF00FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS3" fgColor="0000FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS4" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" nesting="0" />
+            <WordsStyle name="KEYWORDS5" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS6" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS7" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS8" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="OPERATORS" fgColor="8000FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="FOLDER IN CODE1" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="FOLDER IN CODE2" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="FOLDER IN COMMENT" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS1" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS2" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS3" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS4" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS5" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS6" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS7" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS8" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
         </Styles>
     </UserLang>
 </NotepadPlus>
@@ -306,12 +307,12 @@ ENDTEXTBLOCK
 	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
 	procedure fileClose; fclose(fid); fend;
 	procedure filePut
-		fput(fid, header + crlf)
+		fput(fid, header)
 		
-		hilight1="            <Keywords name="Keywords1">" + crlf
-		hilight2="            <Keywords name="Keywords2">" + crlf
-		hilight3="            <Keywords name="Keywords3">" + crlf
-		hilight4="            <Keywords name="Keywords4">" + crlf
+		hilight1="            <Keywords name=" + wq + "Keywords1" + wq + ">"
+		hilight2="            <Keywords name=" + wq + "Keywords2" + wq + ">"
+		hilight3="            <Keywords name=" + wq + "Keywords3" + wq + ">"
+		hilight4="            <Keywords name=" + wq + "Keywords4" + wq + ">"
 		
 		for index = 0 to length(syntaxData)-1
 			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
@@ -319,18 +320,22 @@ ENDTEXTBLOCK
 			category1 = csvArray[1]
 			category2 = csvArray[2]
 			
-			if category2 = "定義済み仮想キー" then
-				hilight4 = hilight4 + syntax + crlf
-			elseif category1 = "スクリプト構文" or category1 = "定数" then
-				hilight1 = hilight1 + syntax + crlf
+			if category1 = "スクリプト関数" then
+				hilight1 = hilight1 + syntax + " "
+			elseif category1 = "配列変数" or category1 = "特殊変数" then
+				hilight2 = hilight2 + syntax + " "
+			elseif category1 = "定数" or category2 = "組込み定数" then
+				hilight3 = hilight3 + syntax + " "
 			else
-				hilight5 = hilight5 + syntax + crlf
+				hilight4 = hilight4 + syntax + " "
 			endif
 		next
 		
-		fput(fid, hilight1)
-		fput(fid, hilight4)
-		fput(fid, hilight5)
+		fput(fid, hilight1 + "</Keywords>")
+		fput(fid, hilight2 + "</Keywords>")
+		fput(fid, hilight3 + "</Keywords>")
+		fput(fid, hilight4 + "</Keywords>")
+		fput(fid, footer + crlf)
 	fend
 endclass
 
@@ -420,7 +425,7 @@ endclass
 ///////////////////////////////////////////////////////////////////////////////
 class all
 	//各クラスを用意、クラス名をこの配列に追加する
-	dim classList[] = "hidemaru", "mery", "sakura", "hidemaruColorful"
+	dim classList[] = "hidemaru", "mery", "notepadplusplus", "sakura", "hidemaruColorful"
 	
 	procedure fileOpen;  do("fileOpen");  fend;
 	procedure fileClose; do("fileClose"); fend;
