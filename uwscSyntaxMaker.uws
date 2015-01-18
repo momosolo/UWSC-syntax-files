@@ -86,7 +86,7 @@ TEXTBLOCK header
 //  ・強調表示/複数行の強調/ツリー定義に対応
 ENDTEXTBLOCK
 TEXTBLOCK footer
-25,[^ 　.\t]*(?=\()
+25,[^ 　.,+*=<>()!?\t]*(?=\()
 185,\$[0-9a-f]+
 201,[
 201,]
