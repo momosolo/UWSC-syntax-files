@@ -2,7 +2,7 @@
 ## これは何？
 各種テキストエディタ向けの強調表示ファイルを生成するツールです。
 
-出来上がった強調表示ファイルも入ってます。
+出来上がった強調表示ファイルも入ってます。欲しい人は右側の[Download ZIP](https://github.com/momosolo/UWSC-syntax-files/archive/master.zip)ボタンからどうぞ。
 
 （本当はGitHubに慣れるのが目的です）
 
