@@ -1,0 +1,30 @@
+//uwscディレクトリからカレントディレクトリにヘルプファイルをコピー
+textblock dosCopyCmd
+copy "GET_UWSC_DIR\uwsc.chm" "GET_CUR_DIR"
+hh.exe -decompile helpDecompile uwsc.chm
+del uwsc.chm
+endtextblock
+dosInput = replace(dosCopyCmd, "GET_UWSC_DIR", GET_UWSC_DIR)
+dosInput = replace(dosInput, "GET_CUR_DIR", GET_CUR_DIR)
+doscmd(dosInput)
+
+//バージョンを取得（どちらの方法がいいのか後で調べる）
+//ヘルプから取得
+//helpPath = "helpDecompile\_RESOURCE\UWSC.htm"
+//fid = fopen(helpPath)
+//fileText = fget(fid, F_ALLTEXT)
+//fclose(fid)
+//version = betweenstr(fileText, "Ver ", "　")
+//スクリプトで本体から取得
+version = GET_UWSC_VER
+
+//ディレクトリ名をhelpVersion[version]に変更
+textblock dosRenameCmd
+rd /s /q  newDirectoryName
+move helpDecompile newDirectoryName
+endtextblock
+newDirectoryName = "helpVersion" + replace(version, ".", "_")
+dosInput = replace(dosRenameCmd, "newDirectoryName", newDirectoryName)
+doscmd(dosInput)
+
+//これでディレクトリごとに比較すればヘルプの修正箇所が分かりやすい
