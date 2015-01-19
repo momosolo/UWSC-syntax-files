@@ -1,6 +1,7 @@
 option specialchar
 
 csvFid = fopen("uwscSyntax.csv") // ヘルプから生成した構文情報CSVファイル
+public uwscVersion = get_uwsc_ver
 public crlf=chr($0d)+chr($0a) // 改行
 public wq=chr($22) // ダブルクォート
 public hashtbl syntaxData = hash_sort
@@ -21,7 +22,7 @@ all.fileClose
 class hidemaru
 TEXTBLOCK header
 // UWSC用強調表示定義ファイル
-//  Ver 5.0 uwsc.chmより抜粋
+//  Ver [uwscVersion] uwsc.chmより抜粋
 ENDTEXTBLOCK
 
 	const directory = "hidemaru"
@@ -33,7 +34,7 @@ ENDTEXTBLOCK
 	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
 	procedure fileClose; fclose(fid); fend;
 	procedure filePut
-		fput(fid, header)
+		fput(fid, replace(header, "[uwscVersion]", uwscVersion))
 		
 		hilight=""
 		
@@ -83,7 +84,7 @@ endclass
 class hidemaruColorful
 TEXTBLOCK header
 // UWSC用強調表示定義ファイル（カラフル版）
-//  Ver 5.0 uwsc.chmより抜粋
+//  Ver [uwscVersion] uwsc.chmより抜粋
 //  ・強調表示/複数行の強調/ツリー定義に対応
 ENDTEXTBLOCK
 TEXTBLOCK footer
@@ -131,7 +132,7 @@ ENDTEXTBLOCK
 	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
 	procedure fileClose; fclose(fid); fend;
 	procedure filePut
-		fput(fid, header)
+		fput(fid, replace(header, "[uwscVersion]", uwscVersion))
 		
 		hilight=""
 		
@@ -346,7 +347,7 @@ endclass
 class sakura
 TEXTBLOCK header1
 // UWSC1  キーワード定義ファイル
-//  Ver 5.0 uwsc.chmより抜粋
+//  Ver [uwscVersion] uwsc.chmより抜粋
 //  スクリプト構文
 //  スクリプト関数・数学関数
 //  スクリプト関数・文字操作関連
@@ -355,7 +356,7 @@ TEXTBLOCK header1
 ENDTEXTBLOCK
 TEXTBLOCK header2
 // UWSC2  キーワード定義ファイル
-//  Ver 5.0 uwsc.chmより抜粋
+//  Ver [uwscVersion] uwsc.chmより抜粋
 //  スクリプト関数・ダイアログ/表示関連
 //  スクリプト関数・制御関数関連
 //  スクリプト関数・システム関数関連
@@ -393,8 +394,8 @@ ENDTEXTBLOCK
 	fend
 	
 	procedure filePut
-		fput(fid1, header1)
-		fput(fid2, header2)
+		fput(fid1, replace(header1, "[uwscVersion]", uwscVersion))
+		fput(fid2, replace(header2, "[uwscVersion]", uwscVersion))
 		
 		hilight1=""
 		hilight2=""
