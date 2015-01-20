@@ -365,7 +365,6 @@ SLCT_LST,定数,SLCTBOX
 SLCT_STR,定数,SLCTBOX
 SLCT_NUM,定数,SLCTBOX
 SLCT_1,定数,SLCTBOX
-SLCT_1,定数,SLCTBOX
 SLCT_2,定数,SLCTBOX
 SLCT_3,定数,SLCTBOX
 SLCT_4,定数,SLCTBOX
@@ -546,8 +545,8 @@ VK_BACK,定数,定義済み仮想キー
 VK_TAB,定数,定義済み仮想キー
 VK_CLEAR,定数,定義済み仮想キー
 VK_RETURN,定数,定義済み仮想キー
+VK_ENTER,定数,定義済み仮想キー
 VK_SHIFT,定数,定義済み仮想キー
-VK_CONTROL,定数,定義済み仮想キー
 VK_CTRL,定数,定義済み仮想キー
 VK_CONTROL,定数,定義済み仮想キー
 VK_MENU,定数,定義済み仮想キー
@@ -742,7 +741,7 @@ TRY_ERRMSG,特殊変数,例外処理
 TRY_ERRLINE,特殊変数,例外処理
 HOTKEY_VK,特殊変数,SETHOTKEY
 HOTKEY_MOD,特殊変数,SETHOTKEY
-G_TIME_YY ,特殊変数,GETTIME
+G_TIME_YY,特殊変数,GETTIME
 G_TIME_MM,特殊変数,GETTIME
 G_TIME_DD,特殊変数,GETTIME
 G_TIME_HH,特殊変数,GETTIME
