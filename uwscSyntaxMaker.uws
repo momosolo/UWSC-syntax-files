@@ -12,7 +12,7 @@ call uwscLibrary\const.uws
 //各クラスが記載されたファイル
 call uwscEditorSetting\hidemaru.uws
 call uwscEditorSetting\mery.uws
-//call uwscEditorSetting\noeditor.uws
+call uwscEditorSetting\noeditor.uws
 call uwscEditorSetting\notepadplusplus.uws
 call uwscEditorSetting\sakura.uws
 
