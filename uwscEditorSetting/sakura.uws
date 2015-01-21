@@ -1,0 +1,86 @@
+﻿///////////////////////////////////////////////////////////////////////////////
+// サクラエディタ
+// http://sakura-editor.sourceforge.net/
+
+classList["sakura"] = true
+
+class sakura
+TEXTBLOCK header1
+// UWSC1  キーワード定義ファイル
+//  Ver [uwscVersion] uwsc.chmより抜粋
+//  スクリプト構文
+//  スクリプト関数・数学関数
+//  スクリプト関数・文字操作関連
+//  スクリプト関数・ウィンドウ関連
+ENDTEXTBLOCK
+TEXTBLOCK header2
+// UWSC2  キーワード定義ファイル
+//  Ver [uwscVersion] uwsc.chmより抜粋
+//  スクリプト関数・ダイアログ/表示関連
+//  スクリプト関数・制御関数関連
+//  スクリプト関数・システム関数関連
+//  スクリプト関数・ウィンドウ関数低レベル
+//  スクリプト関数・配列操作関連
+//  スクリプト関数・ファイル関連
+//  スクリプト関数・INIファイル
+//  スクリプト関数・COMオブジェクト
+//  スクリプト関数・音声認識/合成
+//  スクリプト関数・IE操作関連
+//  スクリプト関数・フォーム画面
+//  スクリプト関数・Excel操作関連
+//  定数
+//  配列変数
+//  特殊変数
+ENDTEXTBLOCK
+
+	const directory = "sakura"
+	const fileName1 = "uwsc51.kwd"
+	const fileName2 = "uwsc52.kwd"
+	const hilightPath1 = directory + "\" + fileName1
+	const hilightPath2 = directory + "\" + fileName2
+	const openMode = F_WRITE1 or F_NOCR
+	dim fid1,fid2
+	
+	procedure openFile
+		fid1 = fopen(hilightPath1, openMode)
+		fid2 = fopen(hilightPath2, openMode)
+	fend
+	
+	procedure closeFile
+		fclose(fid1)
+		fclose(fid2)
+	fend
+	
+	procedure putHeader
+		fput(fid1, replace(header1, "[uwscVersion]", uwscVersion) + crlf)
+		fput(fid2, replace(header2, "[uwscVersion]", uwscVersion) + crlf)
+	fend
+	
+	procedure putFooter; ; fend
+	
+	procedure putBody
+		hilight1=""
+		hilight2=""
+		
+		for index = 0 to length(syntaxData)-1
+			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
+			syntax = csvArray[0]
+			category1 = csvArray[1]
+			category2 = csvArray[2]
+			
+			if category1 = "スクリプト構文" then
+				hilight1 = hilight1 + syntax + crlf
+			else
+				select category2
+					case "数学関数","文字操作関連","ウィンドウ関連"
+						hilight1 = hilight1 + syntax + crlf
+					default
+						hilight2 = hilight2 + syntax + crlf
+				selend
+			endif
+		next
+		
+		fput(fid1, hilight1)
+		fput(fid2, hilight2)
+	fend
+endclass

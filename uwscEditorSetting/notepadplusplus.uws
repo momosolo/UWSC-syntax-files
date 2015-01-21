@@ -1,0 +1,121 @@
+﻿///////////////////////////////////////////////////////////////////////////////
+// Notepad++
+// http://notepad-plus-plus.org/
+
+classList["notepadplusplus"] = true
+
+class notepadplusplus
+TEXTBLOCK header
+<NotepadPlus>
+    <UserLang name="UWSC" ext="uws" udlVersion="2.1">
+        <Settings>
+            <Global caseIgnored="yes" allowFoldOfComments="no" foldCompact="no" forcePureLC="0" decimalSeparator="0" />
+            <Prefix Keywords1="no" Keywords2="no" Keywords3="no" Keywords4="no" Keywords5="no" Keywords6="no" Keywords7="no" Keywords8="no" />
+        </Settings>
+        <KeywordLists>
+            <Keywords name="Comments">00// 01 02 03 04</Keywords>
+            <Keywords name="Numbers, prefix1"></Keywords>
+            <Keywords name="Numbers, prefix2"></Keywords>
+            <Keywords name="Numbers, extras1"></Keywords>
+            <Keywords name="Numbers, extras2"></Keywords>
+            <Keywords name="Numbers, suffix1"></Keywords>
+            <Keywords name="Numbers, suffix2"></Keywords>
+            <Keywords name="Numbers, range"></Keywords>
+            <Keywords name="Operators1">( ) ! * / + - &gt; &lt; = ; $ [ ] , .</Keywords>
+            <Keywords name="Operators2"></Keywords>
+            <Keywords name="Folders in code1, open"></Keywords>
+            <Keywords name="Folders in code1, middle"></Keywords>
+            <Keywords name="Folders in code1, close"></Keywords>
+            <Keywords name="Folders in code2, open"></Keywords>
+            <Keywords name="Folders in code2, middle"></Keywords>
+            <Keywords name="Folders in code2, close"></Keywords>
+            <Keywords name="Folders in comment, open"></Keywords>
+            <Keywords name="Folders in comment, middle"></Keywords>
+            <Keywords name="Folders in comment, close"></Keywords>
+ENDTEXTBLOCK
+TEXTBLOCK body
+            <Keywords name="Keywords1">[keywords1]</Keywords>
+            <Keywords name="Keywords2">[keywords2]</Keywords>
+            <Keywords name="Keywords3">[keywords3]</Keywords>
+            <Keywords name="Keywords4">[keywords4]</Keywords>
+ENDTEXTBLOCK
+TEXTBLOCK footer
+            <Keywords name="Keywords5"></Keywords>
+            <Keywords name="Keywords6"></Keywords>
+            <Keywords name="Keywords7"></Keywords>
+            <Keywords name="Keywords8"></Keywords>
+            <Keywords name="Delimiters">00&quot; 01 02&quot; 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23</Keywords>
+        </KeywordLists>
+        <Styles>
+            <WordsStyle name="DEFAULT" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="COMMENTS" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="LINE COMMENTS" fgColor="008000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="NUMBERS" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS1" fgColor="FF8000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS2" fgColor="FF00FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS3" fgColor="0000FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS4" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" nesting="0" />
+            <WordsStyle name="KEYWORDS5" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS6" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS7" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS8" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="OPERATORS" fgColor="8000FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="FOLDER IN CODE1" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="FOLDER IN CODE2" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="FOLDER IN COMMENT" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS1" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS2" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS3" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS4" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS5" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS6" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS7" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS8" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+        </Styles>
+    </UserLang>
+</NotepadPlus>
+ENDTEXTBLOCK
+
+	const directory = "notepadplusplus"
+	const fileName = "uwsc.xml"
+	const hilightPath = directory + "\" + fileName
+	const openMode = F_WRITE1 or F_NOCR
+	dim fid
+	
+	procedure openFile;  fid = fopen(hilightPath, openMode); fend
+	procedure closeFile; fclose(fid); fend
+	
+	procedure putHeader; fput(fid, header); fend
+	procedure putFooter; fput(fid, footer + crlf); fend
+	
+	procedure putBody
+		Keywords1=""
+		Keywords2=""
+		Keywords3=""
+		Keywords4=""
+		
+		for index = 0 to length(syntaxData)-1
+			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
+			syntax = csvArray[0]
+			category1 = csvArray[1]
+			category2 = csvArray[2]
+			
+			if category1 = "スクリプト関数" then
+				Keywords1 = Keywords1 + syntax + " "
+			elseif category1 = "配列変数" or category1 = "特殊変数" then
+				Keywords2 = Keywords2 + syntax + " "
+			elseif category1 = "定数" or category2 = "組込み定数" then
+				Keywords3 = Keywords3 + syntax + " "
+			else
+				Keywords4 = Keywords4 + syntax + " "
+			endif
+		next
+		
+		replaceBody = replace(body, 	   "[keywords1]", trim(Keywords1))
+		replaceBody = replace(replaceBody, "[keywords2]", trim(Keywords2))
+		replaceBody = replace(replaceBody, "[keywords3]", trim(Keywords3))
+		replaceBody = replace(replaceBody, "[keywords4]", trim(Keywords4))
+		
+		fput(fid, replaceBody)
+	fend
+endclass

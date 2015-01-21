@@ -1,462 +1,60 @@
-option specialchar
+﻿option specialchar
 
-csvFid = fopen("uwscSyntax.csv") // ヘルプから生成した構文情報CSVファイル
-public uwscVersion = get_uwsc_ver
-public crlf=chr($0d)+chr($0a) // 改行
-public wq=chr($22) // ダブルクォート
+//クラス名格納用ハッシュテーブル
+public hashtbl classList = hash_sort
+
+//強調文字列データ格納用ハッシュテーブル
 public hashtbl syntaxData = hash_sort
-for row = 2 to fget(csvFid, F_LINECOUNT)
-	syntax = fget(csvFid, row, 1) // アルファベット順のキーに使用
-	syntaxData[syntax] = fget(csvFid, row) // 各行ハッシュテーブルに格納
-next
-fclose(csvFid)
 
-all.fileOpen
-all.filePut
-all.fileClose
+//各クラス共通定義
+call uwscLibrary\const.uws
 
+//各クラスが記載されたファイル
+call uwscEditorSetting\hidemaru.uws
+call uwscEditorSetting\mery.uws
+//call uwscEditorSetting\noeditor.uws
+call uwscEditorSetting\notepadplusplus.uws
+call uwscEditorSetting\sakura.uws
+
+//CSVファイル読み込み
+readCSV
+
+//全エディタのファイル生成
+all.makeFile
 ///////////////////////////////////////////////////////////////////////////////
-// 秀丸エディタ
-// http://hide.maruo.co.jp/software/hidemaru.html
-
-class hidemaru
-TEXTBLOCK header
-// UWSC用強調表示定義ファイル
-//  Ver [uwscVersion] uwsc.chmより抜粋
-ENDTEXTBLOCK
-
-	const directory = "hidemaru"
-	const fileName = "uwsc.hilight"
-	const hilightPath = directory + "\" + fileName
-	const openMode = F_WRITE1 or F_NOCR
-	dim fid
-	
-	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
-	procedure fileClose; fclose(fid); fend;
-	procedure filePut
-		fput(fid, replace(header, "[uwscVersion]", uwscVersion))
-		
-		hilight=""
-		
-		for index = 0 to length(syntaxData)-1
-			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
-			syntax = csvArray[0]
-			category1 = csvArray[1]
-			category2 = csvArray[2]
-			
-			select category1
-				case "スクリプト構文"
-					hilight = hilight + "41," + syntax + crlf
-				case "スクリプト関数"
-					hilight = hilight + "105," + syntax + crlf
-				case "特殊変数", "配列変数"
-					hilight = hilight + "169," + syntax + crlf
-				default //"定数"
-					hilight = hilight + "233," + syntax + crlf
-			selend
-		next
-		
-		fput(fid, hilight)
-	fend
-endclass
-
-// カラフル版
-// 強調用数値一覧（すべて大文字／小文字の区別なし）
-// 単・・・単語の検索    正・・・正規表現
-//           [----][単--][--正][単正]
-// 強調1         9    41    25    57
-// 強調2        73   105    89   121
-// 強調3       137   169   153   185
-// 強調4       201   233   217   249
-// 強調5       267   299   283   315
-// 強調6       331   363   347   379
-// 強調7       395   427   411   443
-// 強調8       459   491   475   507
-// 行の強調1    13    45    29    61
-// 行の強調2    77   109    93   125
-// 行の強調3   141   173   157   189
-// 行の強調4   205   237   221   253
-// 特に強調1    11    43    27    59
-// 特に強調2    75   107    91   123
-// 特に強調3   139   171   155   187
-// 特に強調4   203   235   219   251
-
-class hidemaruColorful
-TEXTBLOCK header
-// UWSC用強調表示定義ファイル（カラフル版）
-//  Ver [uwscVersion] uwsc.chmより抜粋
-//  ・強調表示/複数行の強調/ツリー定義に対応
-ENDTEXTBLOCK
-TEXTBLOCK footer
-25,[^ 　.,+*=<>()!?\t]*(?=\()
-185,\$[0-9a-f]+
-201,[
-201,]
-395,(
-395,)
-395,!
-395,*
-395,/
-395,+
-395,-
-395,=
-411,<(=|>)?(?!(#CR>|#DBL>|#TAB>))
-411,(?<!(<#CR|<#DBL|<#TAB|<))>=?
-427,_
-427,;
-411,(?<!\d+)\.(?!\d+)
-157,(?<=^[ 　\t]*)(PROCEDURE|FUNCTION)
-221,(?<=^[ 　\t]*)(CLASS|MODULE)
-43,<#CR>
-43,<#DBL>
-43,<#TAB>
-
-//  文字列,コメント定義
-/<HilightMulti>
-/0014,00000000,00,00,00000004,"textblock",00000004,"endtextblock"
-/0003,00000003,00,00,00000000,"//",00000002,""
-/0014,00000004,00,00,00010001,"\\\"[^\"]*\\\"",00000000,"\""
-
-//  ツリー表示用
-/<TreeWord>
-/0000,0002,0000,00000000,00010911,"(?<=^[ 　\\t]*)(module|class)",""
-/0001,0002,0000,00000000,10010911,"(?<=^[ 　\\t]*)(procedure|function)",""
-ENDTEXTBLOCK
-
-	const directory = "hidemaru"
-	const fileName = "uwscColorful.hilight"
-	const hilightPath = directory + "\" + fileName
-	const openMode = F_WRITE1 or F_NOCR
-	dim fid
-	
-	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
-	procedure fileClose; fclose(fid); fend;
-	procedure filePut
-		fput(fid, replace(header, "[uwscVersion]", uwscVersion))
-		
-		hilight=""
-		
-		for index = 0 to length(syntaxData)-1
-			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
-			syntax = csvArray[0]
-			category1 = csvArray[1]
-			category2 = csvArray[2]
-			
-			select category1
-				case "スクリプト関数"
-					hilight = hilight + "105," + syntax + crlf
-				case "定数"
-					hilight = hilight + "169," + syntax + crlf
-				case "特殊変数", "配列変数"
-					hilight = hilight + "233," + syntax + crlf
-				default //"スクリプト構文"
-					select category2
-						case "制御文"
-							hilight = hilight + "363," + syntax + crlf
-						case "組込み定数"
-							hilight = hilight + "169," + syntax + crlf
-						case "関数の定義", "MODULE化"
-							hilight = hilight + "107," + syntax + crlf
-						case "演算式"
-							hilight = hilight + "427," + syntax + crlf
-						default
-							hilight = hilight + "299," + syntax + crlf
-					selend
-			selend
-		next
-		
-		fput(fid, hilight)
-		fput(fid, footer + crlf)
-	fend
-endclass
-
-///////////////////////////////////////////////////////////////////////////////
-// Mery
-// http://www.haijin-boys.com/wiki/
-
-class mery
-TEXTBLOCK header
-#TagBegin=
-#TagEnd=
-#CommentBegin1=
-#CommentEnd1=
-#LineComment1=//
-#CommentBegin2=
-#CommentEnd2=
-#LineComment2=
-#SpecialSyntax=None
-#ScriptBegin=
-#ScriptEnd=
-#QuoteSingle=False
-#QuoteDouble=True
-#QuoteContinue=False
-#EscapeCharacter=
-ENDTEXTBLOCK
-
-	const directory = "mery"
-	const fileName = "uwsc.msy"
-	const hilightPath = directory + "\" + fileName
-	const openMode = F_WRITE8B or F_NOCR
-	dim fid
-	
-	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
-	procedure fileClose; fclose(fid); fend;
-	procedure filePut
-		fput(fid, header + crlf)
-		
-		hilight1="#Word Color=0, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False" + crlf
-		hilight4="#Word Color=3, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False" + crlf
-		hilight5="#Word Color=4, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False" + crlf
-		
-		for index = 0 to length(syntaxData)-1
-			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
-			syntax = csvArray[0]
-			category1 = csvArray[1]
-			category2 = csvArray[2]
-			
-			if category2 = "定義済み仮想キー" then
-				hilight4 = hilight4 + syntax + crlf
-			elseif category1 = "スクリプト構文" or category1 = "定数" then
-				hilight1 = hilight1 + syntax + crlf
-			else
-				hilight5 = hilight5 + syntax + crlf
-			endif
-		next
-		
-		fput(fid, hilight1)
-		fput(fid, hilight4)
-		fput(fid, hilight5)
-	fend
-endclass
-
-///////////////////////////////////////////////////////////////////////////////
-// Notepad++
-// http://notepad-plus-plus.org/
-
-class notepadplusplus
-TEXTBLOCK header
-<NotepadPlus>
-    <UserLang name="UWSC" ext="uws" udlVersion="2.1">
-        <Settings>
-            <Global caseIgnored="yes" allowFoldOfComments="no" foldCompact="no" forcePureLC="0" decimalSeparator="0" />
-            <Prefix Keywords1="no" Keywords2="no" Keywords3="no" Keywords4="no" Keywords5="no" Keywords6="no" Keywords7="no" Keywords8="no" />
-        </Settings>
-        <KeywordLists>
-            <Keywords name="Comments">00// 01 02 03 04</Keywords>
-            <Keywords name="Numbers, prefix1"></Keywords>
-            <Keywords name="Numbers, prefix2"></Keywords>
-            <Keywords name="Numbers, extras1"></Keywords>
-            <Keywords name="Numbers, extras2"></Keywords>
-            <Keywords name="Numbers, suffix1"></Keywords>
-            <Keywords name="Numbers, suffix2"></Keywords>
-            <Keywords name="Numbers, range"></Keywords>
-            <Keywords name="Operators1">( ) ! * / + - &gt; &lt; = ; $ [ ] , .</Keywords>
-            <Keywords name="Operators2"></Keywords>
-            <Keywords name="Folders in code1, open"></Keywords>
-            <Keywords name="Folders in code1, middle"></Keywords>
-            <Keywords name="Folders in code1, close"></Keywords>
-            <Keywords name="Folders in code2, open"></Keywords>
-            <Keywords name="Folders in code2, middle"></Keywords>
-            <Keywords name="Folders in code2, close"></Keywords>
-            <Keywords name="Folders in comment, open"></Keywords>
-            <Keywords name="Folders in comment, middle"></Keywords>
-            <Keywords name="Folders in comment, close"></Keywords>
-ENDTEXTBLOCK
-TEXTBLOCK footer
-            <Keywords name="Keywords5"></Keywords>
-            <Keywords name="Keywords6"></Keywords>
-            <Keywords name="Keywords7"></Keywords>
-            <Keywords name="Keywords8"></Keywords>
-            <Keywords name="Delimiters">00&quot; 01 02&quot; 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23</Keywords>
-        </KeywordLists>
-        <Styles>
-            <WordsStyle name="DEFAULT" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="COMMENTS" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="LINE COMMENTS" fgColor="008000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="NUMBERS" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS1" fgColor="FF8000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS2" fgColor="FF00FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS3" fgColor="0000FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS4" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" nesting="0" />
-            <WordsStyle name="KEYWORDS5" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS6" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS7" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS8" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="OPERATORS" fgColor="8000FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="FOLDER IN CODE1" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="FOLDER IN CODE2" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="FOLDER IN COMMENT" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS1" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS2" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS3" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS4" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS5" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS6" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS7" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS8" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-        </Styles>
-    </UserLang>
-</NotepadPlus>
-ENDTEXTBLOCK
-
-	const directory = "notepadplusplus"
-	const fileName = "uwsc.xml"
-	const hilightPath = directory + "\" + fileName
-	const openMode = F_WRITE1 or F_NOCR
-	dim fid
-	
-	procedure fileOpen;  fid = fopen(hilightPath, openMode); fend;
-	procedure fileClose; fclose(fid); fend;
-	procedure filePut
-		fput(fid, header)
-		
-		hilight1="            <Keywords name=" + wq + "Keywords1" + wq + ">"
-		hilight2="            <Keywords name=" + wq + "Keywords2" + wq + ">"
-		hilight3="            <Keywords name=" + wq + "Keywords3" + wq + ">"
-		hilight4="            <Keywords name=" + wq + "Keywords4" + wq + ">"
-		
-		for index = 0 to length(syntaxData)-1
-			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
-			syntax = csvArray[0]
-			category1 = csvArray[1]
-			category2 = csvArray[2]
-			
-			if category1 = "スクリプト関数" then
-				hilight1 = hilight1 + syntax + " "
-			elseif category1 = "配列変数" or category1 = "特殊変数" then
-				hilight2 = hilight2 + syntax + " "
-			elseif category1 = "定数" or category2 = "組込み定数" then
-				hilight3 = hilight3 + syntax + " "
-			else
-				hilight4 = hilight4 + syntax + " "
-			endif
-		next
-		
-		fput(fid, hilight1 + "</Keywords>")
-		fput(fid, hilight2 + "</Keywords>")
-		fput(fid, hilight3 + "</Keywords>")
-		fput(fid, hilight4 + "</Keywords>")
-		fput(fid, footer + crlf)
-	fend
-endclass
-
-///////////////////////////////////////////////////////////////////////////////
-// サクラエディタ
-// http://sakura-editor.sourceforge.net/
-
-class sakura
-TEXTBLOCK header1
-// UWSC1  キーワード定義ファイル
-//  Ver [uwscVersion] uwsc.chmより抜粋
-//  スクリプト構文
-//  スクリプト関数・数学関数
-//  スクリプト関数・文字操作関連
-//  スクリプト関数・ウィンドウ関連
-
-ENDTEXTBLOCK
-TEXTBLOCK header2
-// UWSC2  キーワード定義ファイル
-//  Ver [uwscVersion] uwsc.chmより抜粋
-//  スクリプト関数・ダイアログ/表示関連
-//  スクリプト関数・制御関数関連
-//  スクリプト関数・システム関数関連
-//  スクリプト関数・ウィンドウ関数低レベル
-//  スクリプト関数・配列操作関連
-//  スクリプト関数・ファイル関連
-//  スクリプト関数・INIファイル
-//  スクリプト関数・COMオブジェクト
-//  スクリプト関数・音声認識/合成
-//  スクリプト関数・IE操作関連
-//  スクリプト関数・フォーム画面
-//  スクリプト関数・Excel操作関連
-//  定数
-//  配列変数
-//  特殊変数
-
-ENDTEXTBLOCK
-
-	const directory = "sakura"
-	const fileName1 = "uwsc51.kwd"
-	const fileName2 = "uwsc52.kwd"
-	const hilightPath1 = directory + "\" + fileName1
-	const hilightPath2 = directory + "\" + fileName2
-	const openMode = F_WRITE1 or F_NOCR
-	dim fid1,fid2
-	
-	procedure fileOpen
-		fid1 = fopen(hilightPath1, openMode)
-		fid2 = fopen(hilightPath2, openMode)
-	fend
-	
-	procedure fileClose
-		fclose(fid1)
-		fclose(fid2)
-	fend
-	
-	procedure filePut
-		fput(fid1, replace(header1, "[uwscVersion]", uwscVersion))
-		fput(fid2, replace(header2, "[uwscVersion]", uwscVersion))
-		
-		hilight1=""
-		hilight2=""
-		
-		for index = 0 to length(syntaxData)-1
-			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
-			syntax = csvArray[0]
-			category1 = csvArray[1]
-			category2 = csvArray[2]
-			
-			if category1 = "スクリプト構文" then
-				hilight1 = hilight1 + syntax + crlf
-			else
-				select category2
-					case "数学関数","文字操作関連","ウィンドウ関連"
-						hilight1 = hilight1 + syntax + crlf
-					default
-						hilight2 = hilight2 + syntax + crlf
-				selend
-			endif
-		next
-		
-		fput(fid1, hilight1)
-		fput(fid2, hilight2)
-	fend
-endclass
-
+procedure readCSV
+	csvFid = fopen("uwscSyntax.csv") // ヘルプから生成した構文情報CSVファイル
+	for row = 2 to fget(csvFid, F_LINECOUNT)
+		syntax = fget(csvFid, row, 1) // アルファベット順のキーに使用
+		syntaxData[syntax] = fget(csvFid, row) // 各行ハッシュテーブルに格納
+	next
+	fclose(csvFid)
+fend
 ///////////////////////////////////////////////////////////////////////////////
 class all
-	//各クラスを用意、クラス名をこの配列に追加する
-	dim classList[] = "hidemaru", "mery", "notepadplusplus", "sakura", "hidemaruColorful"
-	
-	procedure fileOpen;  do("fileOpen");  fend;
-	procedure fileClose; do("fileClose"); fend;
-	procedure filePut;   do("filePut");   fend;
-	procedure do(procedureName)
+	procedure makeFile
 		for className in classList
-			COM_ERR_IGN
-			try
-				//className.procedureName()
-				evalStr = className + "." + procedureName + "()"
-				eval(evalStr)
-			except
-				//unknown className or procedureName
-				msgbox("COM_Error:className=" + className + ", procedureName=" + procedureName)
-			endtry
-			COM_ERR_RET
+			//各ディレクトリの生成
+			makeDirectory(className)
+			
+			//各ファイルの生成
+			evalCommandReplaceClassName("className.openFile()",  className)
+			evalCommandReplaceClassName("className.putHeader()", className)
+			evalCommandReplaceClassName("className.putBody()",	 className)
+			evalCommandReplaceClassName("className.putFooter()", className)
+			evalCommandReplaceClassName("className.closeFile()", className)
 		next
 	fend
-	procedure all
-		for className in classList
-			COM_ERR_IGN
-			try
-				//doscmd(mkdir className.directory)
-				doscmdStr = "mkdir " + eval(className + ".directory")
-				doscmd(doscmdStr)
-			except
-				//not define directory
-			endtry
-			COM_ERR_RET
-		next
+	
+	procedure makeDirectory(className)
+		directory = evalCommandReplaceClassName("className.directory", className)
+		doscmdStr = replace("mkdir directory", "directory", directory)
+		doscmd(doscmdStr)
+	fend
+	
+	function evalCommandReplaceClassName(command, className)
+		evalStr = replace(command, "className", className)
+		result = eval(evalStr)
 	fend
 endclass
 ///////////////////////////////////////////////////////////////////////////////

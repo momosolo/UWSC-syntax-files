@@ -1,0 +1,62 @@
+﻿///////////////////////////////////////////////////////////////////////////////
+// Mery
+// http://www.haijin-boys.com/wiki/
+
+classList["mery"] = true
+
+class mery
+TEXTBLOCK header
+#TagBegin=
+#TagEnd=
+#CommentBegin1=
+#CommentEnd1=
+#LineComment1=//
+#CommentBegin2=
+#CommentEnd2=
+#LineComment2=
+#SpecialSyntax=None
+#ScriptBegin=
+#ScriptEnd=
+#QuoteSingle=False
+#QuoteDouble=True
+#QuoteContinue=False
+#EscapeCharacter=
+ENDTEXTBLOCK
+
+	const directory = "mery"
+	const fileName = "uwsc.msy"
+	const hilightPath = directory + "\" + fileName
+	const openMode = F_WRITE8B or F_NOCR
+	dim fid
+	
+	procedure openFile;  fid = fopen(hilightPath, openMode); fend
+	procedure closeFile; fclose(fid); fend
+	
+	procedure putHeader; fput(fid, header + crlf); fend
+	procedure putFooter; ; fend
+	
+	procedure putBody
+		hilight1="#Word Color=0, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False" + crlf
+		hilight4="#Word Color=3, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False" + crlf
+		hilight5="#Word Color=4, WholeWord=True, RightSide=False, MatchCase=False, InsideTag=False, RegEx=False" + crlf
+		
+		for index = 0 to length(syntaxData)-1
+			csvArray = split(syntaxData[index, HASH_VAL], ",", false, false)
+			syntax = csvArray[0]
+			category1 = csvArray[1]
+			category2 = csvArray[2]
+			
+			if category2 = "定義済み仮想キー" then
+				hilight4 = hilight4 + syntax + crlf
+			elseif category1 = "スクリプト構文" or category1 = "定数" then
+				hilight1 = hilight1 + syntax + crlf
+			else
+				hilight5 = hilight5 + syntax + crlf
+			endif
+		next
+		
+		fput(fid, hilight1)
+		fput(fid, hilight4)
+		fput(fid, hilight5)
+	fend
+endclass

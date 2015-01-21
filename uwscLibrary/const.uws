@@ -1,0 +1,8 @@
+﻿//バージョン
+public uwscVersion = get_uwsc_ver
+
+//改行
+public crlf=chr($0d)+chr($0a)
+
+//ダブルクォート
+public wq=chr($22)
