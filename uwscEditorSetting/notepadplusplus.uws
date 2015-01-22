@@ -2,8 +2,6 @@
 // Notepad++
 // http://notepad-plus-plus.org/
 
-classList["notepadplusplus"] = true
-
 class notepadplusplus
 TEXTBLOCK header
 <NotepadPlus>

@@ -2,8 +2,6 @@
 // NoEditor
 // http://www.yokkasoft.net/
 
-classList["noeditor"] = true
-
 class noeditor
 TEXTBLOCK header
 [VERSION]

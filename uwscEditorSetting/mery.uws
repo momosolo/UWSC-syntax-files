@@ -2,8 +2,6 @@
 // Mery
 // http://www.haijin-boys.com/wiki/
 
-classList["mery"] = true
-
 class mery
 TEXTBLOCK header
 #TagBegin=

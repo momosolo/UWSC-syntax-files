@@ -2,9 +2,6 @@
 // 秀丸エディタ
 // http://hide.maruo.co.jp/software/hidemaru.html
 
-classList["hidemaru"] = true
-classList["hidemaruColorful"] = true
-
 class hidemaru
 TEXTBLOCK header
 // UWSC用強調表示定義ファイル

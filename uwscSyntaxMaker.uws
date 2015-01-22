@@ -19,6 +19,9 @@ call uwscEditorSetting\sakura.uws
 //CSVファイル読み込み
 readCSV
 
+//call先のクラスファイル読み込み
+readClassName
+
 //全エディタのファイル生成
 all.makeFile
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,6 +32,44 @@ procedure readCSV
 		syntaxData[syntax] = fget(csvFid, row) // 各行ハッシュテーブルに格納
 	next
 	fclose(csvFid)
+fend
+///////////////////////////////////////////////////////////////////////////////
+procedure readClassName
+	checkDirectory = "uwscEditorSetting"
+	
+	dim callFileList[0]
+	dim defineClassList[0]
+	
+	// このファイル自身の持つ「call uwscEditorSetting\*.uws」を取得
+	pattern = "^[\t 　]*call[\t 　]+(checkDirectory\\[^\t 　\r\n]+.uws)"
+	pattern = replace(pattern, "checkDirectory", checkDirectory)
+	searchPatternFromFile(pattern, GET_UWSC_NAME, 0, callFileList)
+	
+	for filePath in callFileList
+		// 対象ファイルの持つ「class ***」「module ***」を取得
+		pattern = "^[\t 　]*(class|module)[\t 　]+([^\t 　\r\n]+)"
+		searchPatternFromFile(pattern, filePath, 1, defineClassList)
+		
+		for className in defineClassList
+			classList[className] = true
+		next
+	next
+fend
+///////////////////////////////////////////////////////////////////////////////
+procedure searchPatternFromFile(pattern, fileName, placeNum, var resultList[])
+	fid = fopen(fileName)
+	textStr = fget(fid, F_ALLTEXT)
+	fclose(fid)
+	re = createoleobj("VBScript.RegExp")
+	re.Global = true	 //複数個所を検索
+	re.IgnoreCase = true //大文字小文字を区別しない
+	re.Multiline = true  //検索対象を複数行として扱う
+	re.pattern = pattern
+	matches = re.Execute(textStr)
+	resize(resultList, matches.Count -1)
+	for i=0 to matches.Count-1
+		resultList[i] = matches.Item(i).SubMatches.Item(placeNum)
+	next
 fend
 ///////////////////////////////////////////////////////////////////////////////
 class all

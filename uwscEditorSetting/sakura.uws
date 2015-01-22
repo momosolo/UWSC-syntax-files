@@ -2,8 +2,6 @@
 // サクラエディタ
 // http://sakura-editor.sourceforge.net/
 
-classList["sakura"] = true
-
 class sakura
 TEXTBLOCK header1
 // UWSC1  キーワード定義ファイル
