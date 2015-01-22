@@ -89,7 +89,7 @@ TEXTBLOCK body
 74796C650B0009576F726B3243617365080000
 ENDTEXTBLOCK
 
-	const directory = "noeditor"
+	const directory = "強調表示ファイル（NoEditor用）"
 	const fileName = "UWSC.kwd"
 	const hilightPath = directory + "\" + fileName
 	const openMode = F_WRITE1 or F_NOCR

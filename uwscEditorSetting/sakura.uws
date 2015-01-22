@@ -31,7 +31,7 @@ TEXTBLOCK header2
 //  特殊変数
 ENDTEXTBLOCK
 
-	const directory = "sakura"
+	const directory = "強調表示ファイル（サクラエディタ用）"
 	const fileName1 = "uwsc51.kwd"
 	const fileName2 = "uwsc52.kwd"
 	const hilightPath1 = directory + "\" + fileName1
