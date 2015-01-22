@@ -777,8 +777,8 @@
 427,_
 427,;
 411,(?<!\d+)\.(?!\d+)
-157,(?<=^[ 　\t]*)(PROCEDURE|FUNCTION)
-221,(?<=^[ 　\t]*)(CLASS|MODULE)
+189,(?<=^[ 　\t]*)(PROCEDURE|FUNCTION)
+253,(?<=^[ 　\t]*)(CLASS|MODULE)
 43,<#CR>
 43,<#DBL>
 43,<#TAB>
