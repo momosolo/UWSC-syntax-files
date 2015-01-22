@@ -8,7 +8,7 @@ TEXTBLOCK header
 //  Ver [uwscVersion] uwsc.chmより抜粋
 ENDTEXTBLOCK
 
-	const directory = "hidemaru"
+	const directory = "強調表示ファイル（秀丸エディタ用）"
 	const fileName = "uwsc.hilight"
 	const hilightPath = directory + "\" + fileName
 	const openMode = F_WRITE1 or F_NOCR
@@ -110,7 +110,7 @@ TEXTBLOCK footer
 /0001,0002,0000,00000000,10010911,"(?<=^[ 　\\t]*)(procedure|function)",""
 ENDTEXTBLOCK
 
-	const directory = "hidemaru"
+	const directory = "強調表示ファイル（秀丸エディタ用）"
 	const fileName = "uwscColorful.hilight"
 	const hilightPath = directory + "\" + fileName
 	const openMode = F_WRITE1 or F_NOCR

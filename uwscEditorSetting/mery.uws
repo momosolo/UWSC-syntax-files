@@ -21,7 +21,7 @@ TEXTBLOCK header
 #EscapeCharacter=
 ENDTEXTBLOCK
 
-	const directory = "mery"
+	const directory = "強調表示ファイル（Mery用）"
 	const fileName = "uwsc.msy"
 	const hilightPath = directory + "\" + fileName
 	const openMode = F_WRITE8B or F_NOCR

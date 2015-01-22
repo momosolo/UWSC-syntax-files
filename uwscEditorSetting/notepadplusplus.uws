@@ -74,7 +74,7 @@ TEXTBLOCK footer
 </NotepadPlus>
 ENDTEXTBLOCK
 
-	const directory = "notepadplusplus"
+	const directory = "強調表示ファイル（Notepad＋＋用）"
 	const fileName = "uwsc.xml"
 	const hilightPath = directory + "\" + fileName
 	const openMode = F_WRITE1 or F_NOCR
