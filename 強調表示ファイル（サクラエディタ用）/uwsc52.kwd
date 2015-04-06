@@ -1,5 +1,5 @@
 // UWSC2  キーワード定義ファイル
-//  Ver 5.1 uwsc.chmより抜粋
+//  Ver 5.11 uwsc.chmより抜粋
 //  スクリプト関数・ダイアログ/表示関連
 //  スクリプト関数・制御関数関連
 //  スクリプト関数・システム関数関連
@@ -134,6 +134,7 @@ FOM_NOHIDE
 FOM_NOICON
 FOM_NORESIZE
 FOM_NOSUBMIT
+FOM_NOTASKBAR
 FOM_TOPMOST
 FOPEN
 FPUT
@@ -262,6 +263,7 @@ MOD_CONTROL
 MOD_SHIFT
 MOD_WIN
 MON_HEIGHT
+MON_NAME
 MON_WIDTH
 MON_X
 MON_Y
@@ -290,6 +292,12 @@ POFF
 POPUPMENU
 POWERSHELL
 QSORT
+QSRT_A
+QSRT_D
+QSRT_NATURALA
+QSRT_NATURALD
+QSRT_UNICODEA
+QSRT_UNICODED
 READINI
 RECOSTATE
 RESIZE
@@ -370,6 +378,10 @@ SNSR_Environmental_WindDirection
 SNSR_Environmental_WindSpeed
 SNSR_Light_Lux
 SNSR_Light_Temperature
+SNSR_Location_Altitude
+SNSR_Location_Latitude
+SNSR_Location_Longitude
+SNSR_Location_Speed
 SNSR_Mechanical_AbsPressure
 SNSR_Mechanical_Force
 SNSR_Mechanical_GaugePressure
