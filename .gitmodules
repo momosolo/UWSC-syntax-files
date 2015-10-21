@@ -1,0 +1,3 @@
+[submodule "UWSC-syntax-files"]
+	path = UWSC-syntax-files
+	url = https://github.com/momosolo/UWSC-syntax-files.git
