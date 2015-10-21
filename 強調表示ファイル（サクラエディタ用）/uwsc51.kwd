@@ -1,5 +1,5 @@
 // UWSC1  キーワード定義ファイル
-//  Ver 5.11 uwsc.chmより抜粋
+//  Ver 5.2 uwsc.chmより抜粋
 //  スクリプト構文
 //  スクリプト関数・数学関数
 //  スクリプト関数・文字操作関連
@@ -55,6 +55,7 @@ EXPLICIT
 FALSE
 FEND
 FINALLY
+FIXBALLOON
 FOR
 FORMAT
 FUNCTION

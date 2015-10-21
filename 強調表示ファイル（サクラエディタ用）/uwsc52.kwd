@@ -1,5 +1,5 @@
 // UWSC2  キーワード定義ファイル
-//  Ver 5.11 uwsc.chmより抜粋
+//  Ver 5.2 uwsc.chmより抜粋
 //  スクリプト関数・ダイアログ/表示関連
 //  スクリプト関数・制御関数関連
 //  スクリプト関数・システム関数関連
@@ -54,6 +54,7 @@ CLK_CONTINUE
 CLK_DBLCLK
 CLK_FROMLAST
 CLK_LEFTCLK
+CLK_LINK
 CLK_LIST
 CLK_LISTVIEW
 CLK_LSTVEW
@@ -235,6 +236,7 @@ ITM_BACK
 ITM_BTN
 ITM_EDIT
 ITM_FROMLAST
+ITM_LINK
 ITM_LIST
 ITM_LISTVIEW
 ITM_LSTVEW
@@ -443,6 +445,7 @@ TGL_NUMLOCK
 TGL_SCROLLLOCK
 TOPMOST
 TOPNOACTV
+TOUCH
 TRY_ERRLINE
 TRY_ERRMSG
 UP
